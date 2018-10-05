@@ -16,6 +16,9 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using FluentValidation.AspNetCore;
+using AutoMapper;
+
 
 namespace IOT
 {
@@ -47,7 +50,9 @@ namespace IOT
             });
 
             services.AddDbContext<IOTContext>(options => options.UseNpgsql(Configuration.GetConnectionString("IOTDatabase")));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddAutoMapper();
+            services.AddMvc().AddFluentValidation(fvc =>
+                fvc.RegisterValidatorsFromAssemblyContaining<Startup>()).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +68,7 @@ namespace IOT
             }
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseMvc();
         }
     }
