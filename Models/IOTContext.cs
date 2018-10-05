@@ -24,11 +24,6 @@ namespace IOT.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-
-                optionsBuilder.UseNpgsql("host=localhost;database=IOT;user id=postgres;password=aZamam");
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

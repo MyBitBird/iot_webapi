@@ -36,10 +36,10 @@ namespace IOT.Controllers
             if(dto==null)
                 return BadRequest();
             
-            Users tmp= _service.Authenticate(dto.Username,dto.Password);
-            if(tmp==null) return Unauthorized();
+            Users login_user= _service.Authenticate(dto.Username,dto.Password);
+            if(login_user ==null) return Unauthorized();
 
-            return Ok(new {tmp.Id,token= Utility.BuildToken(tmp,_config) });
+            return Ok(new {login_user.Id,token= Utility.BuildToken(login_user,_config) });
 
         }
 

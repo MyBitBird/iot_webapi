@@ -30,11 +30,18 @@ namespace IOT.Helper
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
               _config["Jwt:Issuer"],
               claims,
-              expires: DateTime.Now.AddDays(7),
+              expires: DateTime.Now.AddDays(1),
               signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        public static Guid GetCurrentUserID(ClaimsPrincipal user)
+        {
+            return Guid.Parse(user.Claims.FirstOrDefault(x => x.Type == "ID")?.Value);
+
+        }
+
 
 
 
