@@ -33,9 +33,9 @@ namespace IOT.Controllers
         [AllowAnonymous]
         public IActionResult Authenticate([FromBody] AuthorizeDTO dto )
         {
-            if(dto==null)
+             if(!this.ModelState.IsValid)
                 return BadRequest();
-            
+
             Users login_user= _service.Authenticate(dto.Username,dto.Password);
             if(login_user ==null) return Unauthorized();
 
