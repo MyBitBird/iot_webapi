@@ -58,5 +58,11 @@ namespace IOT.Controllers
         {
             return Ok(await _service.Delete(id));
         }
+
+        [HttpGet,Authorize]
+        public async Task<IActionResult> GetMyServices()
+        {
+            return Ok(_mapper.Map<IList<ServiceDTO>>(await _service.GetByUserId(Utility.GetCurrentUserID(User))));
+        }
     }
 }

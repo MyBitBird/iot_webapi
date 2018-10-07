@@ -36,6 +36,11 @@ namespace IOT.Services{
             return await _context.Services.FirstOrDefaultAsync(x=>x.Id==id);
         }
 
+        public async Task<Models.Services[]> GetByUserId(Guid userId)
+        {
+            return await _context.Services.Where(x => x.UserId == userId).ToArrayAsync();
+        }
+
         public async Task<Boolean> UpdateService(Guid id, Models.Services service)
         {
             Models.Services preService = await GetById(id);
