@@ -21,11 +21,12 @@ namespace IOT.Controllers
     {
         ServiceService _service;
         IMapper _mapper;
+
         public ServiceController(IOTContext context,IMapper mapper)
         {
             _service = new ServiceService(context);
             _mapper=mapper;
-
+            
         }
 
         [HttpPost,Authorize]
@@ -35,9 +36,11 @@ namespace IOT.Controllers
             {
                 return BadRequest();
             }
+            Guid userId = Utility.GetCurrentUserID(User);
+
             Models.Services newService = _mapper.Map<Models.Services>(dto);
 
-           newService = await _service.NewService(newService,Utility.GetCurrentUserID(User));
+           newService = await _service.NewService(newService,userId);
 
            return Ok(newService.Id);
 
@@ -48,21 +51,26 @@ namespace IOT.Controllers
         {
             if(!this.ModelState.IsValid)
                 return BadRequest();
+
+            Guid userId = Utility.GetCurrentUserID(User);
             Models.Services service = _mapper.Map<Models.Services>(dto);
-            return Ok(await _service.UpdateService(id, service));
+            return Ok(await _service.UpdateService(id, service,userId));
 
         }
 
         [HttpDelete("{id}"),Authorize]
         public async Task<IActionResult> Delete(Guid id)
         {
-            return Ok(await _service.Delete(id));
+            Guid userId = Utility.GetCurrentUserID(User);
+
+            return Ok(await _service.Delete(id,userId));
         }
 
         [HttpGet,Authorize]
         public async Task<IActionResult> GetMyServices()
         {
-            return Ok(_mapper.Map<IList<ServiceDTO>>(await _service.GetByUserId(Utility.GetCurrentUserID(User))));
+            Guid userId = Utility.GetCurrentUserID(User);
+            return Ok(_mapper.Map<IList<ServiceDTO>>(await _service.GetByUserId(userId)));
         }
     }
 }
