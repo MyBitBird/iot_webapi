@@ -29,7 +29,7 @@ namespace IOT.Controllers
         }
 
         [HttpPost,Authorize]
-        public IActionResult NewService([FromBody] ServiceDTO dto)
+        public async Task<IActionResult> NewService([FromBody] ServiceDTO dto)
         {
             if(!this.ModelState.IsValid)
             {
@@ -37,9 +37,19 @@ namespace IOT.Controllers
             }
             Models.Services newService = _mapper.Map<Models.Services>(dto);
 
-           newService = _service.NewService(newService,Utility.GetCurrentUserID(User));
+           newService = await _service.NewService(newService,Utility.GetCurrentUserID(User));
 
            return Ok(newService.Id);
+
+        }
+
+        [HttpPut("{id}"),Authorize]
+        public async Task<IActionResult> UpdateService(Guid id,[FromBody] ServiceDTO dto)
+        {
+            if(!this.ModelState.IsValid)
+                return BadRequest();
+            Models.Services service = _mapper.Map<Models.Services>(dto);
+            return Ok(await _service.UpdateService(id, service));
 
         }
     }

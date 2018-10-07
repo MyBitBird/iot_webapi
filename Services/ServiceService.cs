@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using IOT.Models;
 using IOT.Helper;
+using System.Threading.Tasks;
 
 namespace IOT.Services{
 
@@ -17,7 +18,9 @@ namespace IOT.Services{
 
         }
 
-        public Models.Services NewService(Models.Services service,Guid userId)
+        
+
+        public async Task<Models.Services> NewService(Models.Services service,Guid userId)
         {
             service.RegisterDate=DateTime.Now;
             service.Status=(short)MyEnums.ServiceStatus.ACTIVE;
@@ -27,6 +30,23 @@ namespace IOT.Services{
             return service;
             
         }
+
+        public async Task<Models.Services> GetById(Guid id)
+        {
+            return await _context.Services.FirstOrDefaultAsync(x=>x.Id==id);
+        }
+
+        public async Task<Boolean> UpdateService(Guid id, Models.Services service)
+        {
+            Models.Services preService = await GetById(id);
+            preService.Title = service.Title;
+            _context.Services.Update(preService);
+            _context.SaveChanges();
+            return true;
+
+
+        }
+
     }
 
 }
