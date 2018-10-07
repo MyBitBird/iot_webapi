@@ -47,6 +47,15 @@ namespace IOT.Services{
 
         }
 
+        public async Task<Boolean> Delete(Guid id)
+        {
+            Models.Services service = await  GetById(id);
+            service.Status=(byte)MyEnums.ServiceStatus.DELETED;
+            _context.Services.Update(service);
+            _context.SaveChanges();
+            return true;
+        }
+
     }
 
 }

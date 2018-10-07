@@ -52,5 +52,11 @@ namespace IOT.Controllers
             return Ok(await _service.UpdateService(id, service));
 
         }
+
+        [HttpDelete("{id}"),Authorize]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            return Ok(await _service.Delete(id));
+        }
     }
 }

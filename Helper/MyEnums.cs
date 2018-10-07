@@ -6,7 +6,7 @@ namespace IOT.Helper
         {
             ACTIVE = 1,
             DEACTICE = 2,
-            LOCKED = 3
+            DELETED = 3
 
 
         }
