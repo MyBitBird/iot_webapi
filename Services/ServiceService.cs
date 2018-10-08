@@ -45,6 +45,26 @@ namespace IOT.Services{
             if(preService==null) return false;
 
             preService.Title = service.Title;
+
+            foreach(ServiceProperties property in preService.ServiceProperties)
+            {
+                if(service.ServiceProperties.Any(x=>x.Code==property.Code)) continue;
+                else 
+                {
+                    property.Deleted=true;
+                    _context.ServiceProperties.Update(property);
+                }
+            }
+
+            foreach (ServiceProperties property in service.ServiceProperties)
+            {
+                if (preService.ServiceProperties.Any(x => x.Code == property.Code)) continue;
+                else
+                {
+                    property.ServiceId=id;                    
+                    await _context.ServiceProperties.AddAsync(property);
+                }
+            }
             _context.Services.Update(preService);
             _context.SaveChanges();
             return true;
