@@ -13,6 +13,7 @@ namespace IOT.Helper
         public AutoMapper()
         {
             CreateMap<ServiceDTO,Models.Services>().ReverseMap();
+            CreateMap<ServicePropertiesDTO,ServiceProperties>().ReverseMap();
         }
     }
 }
