@@ -72,5 +72,13 @@ namespace IOT.Controllers
             Guid userId = Utility.GetCurrentUserID(User);
             return Ok(_mapper.Map<IList<ServiceDTO>>(await _service.GetByUserId(userId)));
         }
+
+        [HttpGet("{id}"),Authorize]
+        public async Task<IActionResult> GetServiceById(Guid id)
+        {
+            Guid userId = Utility.GetCurrentUserID(User);
+            return Ok(_mapper.Map<ServiceDTO>(await _service.GetById(id,userId)));
+
+        }
     }
 }

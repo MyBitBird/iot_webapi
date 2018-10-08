@@ -17,15 +17,12 @@ namespace IOT.Services{
             _context=context;
 
         }
-
-        
-
         public async Task<Models.Services> NewService(Models.Services service,Guid userId)
         {
             service.RegisterDate=DateTime.Now;
             service.Status=(short)MyEnums.ServiceStatus.ACTIVE;
             service.UserId=userId;
-            _context.Services.Add(service);
+            await _context.Services.AddAsync(service);
             _context.SaveChanges();
             return service;
             
@@ -33,7 +30,7 @@ namespace IOT.Services{
 
         public async Task<Models.Services> GetById(Guid id,Guid userId)
         {
-            return await _context.Services.FirstOrDefaultAsync(x=>x.Id==id && x.UserId==userId);
+            return await _context.Services.Include(i=>i.ServiceProperties).FirstOrDefaultAsync(x=>x.Id==id && x.UserId==userId);
         }
 
         public async Task<Models.Services[]> GetByUserId(Guid userId)
@@ -51,7 +48,6 @@ namespace IOT.Services{
             _context.Services.Update(preService);
             _context.SaveChanges();
             return true;
-
 
         }
 
