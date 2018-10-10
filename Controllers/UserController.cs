@@ -51,9 +51,23 @@ namespace IOT.Controllers
                 return BadRequest();
 
             Users user = _mapper.Map<Users>(dto);
-            user=await _service.SignUp(user);
+            user=await _service.SignUp(user,MyEnums.UserTypes.ADMIN);
             return Ok(new { user.Id, token = Utility.BuildToken(user, _config) });
             
+        }
+
+        [HttpPost,Authorize]
+        public async Task<IActionResult> NewUser([FromBody] UserDTO dto)
+        {
+            if (!this.ModelState.IsValid)
+                return BadRequest();
+
+            Users user = _mapper.Map<Users>(dto);
+            user = await _service.SignUp(user, MyEnums.UserTypes.DEVICE);
+            return Ok(new { user.Id, token = Utility.BuildToken(user, _config) });
+            
+
+
         }
         
 

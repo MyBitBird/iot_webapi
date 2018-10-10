@@ -24,10 +24,10 @@ public class UserService
         return _context.Users.FirstOrDefault(x=>x.Username==username && x.Password==password);//#warning always encrypt your password!
     }
 
-    public async Task<Users> SignUp(Users user)
+    public async Task<Users> SignUp(Users user,MyEnums.UserTypes type)
     {
         user.RegisterDate=DateTime.Now;
-        user.Type=(byte)MyEnums.UserTypes.ADMIN;
+        user.Type=(byte)type;
         user.Status=(byte)MyEnums.UserStatus.ACTIVE;
         user.Username=user.Username.ToLower();
         //user.Password = hash user.Password
