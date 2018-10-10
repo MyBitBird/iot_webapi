@@ -14,6 +14,7 @@ namespace IOT.Helper
         {
             CreateMap<ServiceDTO,Models.Services>().ReverseMap();
             CreateMap<ServicePropertiesDTO,ServiceProperties>().ReverseMap();
+            CreateMap<UserDTO,Users>();
         }
     }
 }
