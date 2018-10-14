@@ -38,12 +38,13 @@ public class UserService
 
     }
 
-        public async Task<Users> AddUser(Users user, Models.Services[] validServices)
+        public async Task<Users> AddUser(Users user,Guid parentUserId, Models.Services[] validServices)
         {
             user.RegisterDate = DateTime.Now;
             user.Type = (byte)MyEnums.UserTypes.DEVICE;
             user.Status = (byte)MyEnums.UserStatus.ACTIVE;
             user.Username = user.Username.ToLower();
+            user.ParentUserId=parentUserId;
             foreach (var service in user.ServiceUsers)
             {
                 service.RegisterDate=DateTime.Now;

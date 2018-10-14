@@ -20,6 +20,7 @@ namespace IOT.Models
         public short Status { get; set; }
         public short Type { get; set; }
         public DateTime RegisterDate { get; set; }
+        public Guid? ParentUserId { get; set; }
 
         public ICollection<ServiceLogs> ServiceLogs { get; set; }
         public ICollection<ServiceUsers> ServiceUsers { get; set; }

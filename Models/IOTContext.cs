@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using IOT.Models;
+
 namespace IOT.Models
 {
     public partial class IOTContext : DbContext
@@ -24,6 +24,7 @@ namespace IOT.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+          
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -145,7 +146,9 @@ namespace IOT.Models
 
                 entity.Property(e => e.Deleted).HasColumnName("deleted");
 
-                entity.Property(e => e.RegisterDate).HasColumnName("register_date");
+                entity.Property(e => e.RegisterDate)
+                    .HasColumnName("register_date")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.ServiceId).HasColumnName("service_id");
 
@@ -181,6 +184,8 @@ namespace IOT.Models
                     .IsRequired()
                     .HasColumnName("name")
                     .HasColumnType("character varying");
+
+                entity.Property(e => e.ParentUserId).HasColumnName("parent_user_id");
 
                 entity.Property(e => e.Password)
                     .IsRequired()

@@ -64,10 +64,11 @@ namespace IOT.Controllers
         {
             if (!this.ModelState.IsValid)
                 return BadRequest();
+            Guid userId = Utility.GetCurrentUserID(User);
 
             Users user = _mapper.Map<Users>(dto);
             
-            user = await _service.AddUser(user,await _serviceService.GetByUserId(Utility.GetCurrentUserID(User)));
+            user = await _service.AddUser(user,userId,await _serviceService.GetByUserId(userId));
             if(user==null) return Forbid();
             return Ok(new { user.Id, token = Utility.BuildToken(user, _config) });
             
