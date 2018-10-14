@@ -21,11 +21,14 @@ namespace IOT.Controllers
         UserService _service;
         IConfiguration _config;
         IMapper _mapper;
+
+        ServiceService _serviceService;
         public UserController(IOTContext context,IMapper mapper,IConfiguration config)
         {
             _service = new UserService(context);
             _config=config;
             _mapper=mapper;
+            _serviceService = new ServiceService(context);
 
 
         }
@@ -51,7 +54,7 @@ namespace IOT.Controllers
                 return BadRequest();
 
             Users user = _mapper.Map<Users>(dto);
-            user=await _service.SignUp(user,MyEnums.UserTypes.ADMIN);
+            user=await _service.SignUp(user);
             return Ok(new { user.Id, token = Utility.BuildToken(user, _config) });
             
         }
@@ -63,7 +66,9 @@ namespace IOT.Controllers
                 return BadRequest();
 
             Users user = _mapper.Map<Users>(dto);
-            user = await _service.SignUp(user, MyEnums.UserTypes.DEVICE);
+            
+            user = await _service.AddUser(user,await _serviceService.GetByUserId(Utility.GetCurrentUserID(User)));
+            if(user==null) return Forbid();
             return Ok(new { user.Id, token = Utility.BuildToken(user, _config) });
             
 

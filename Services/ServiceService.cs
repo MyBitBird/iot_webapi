@@ -23,7 +23,7 @@ namespace IOT.Services{
             service.Status=(short)MyEnums.ServiceStatus.ACTIVE;
             service.UserId=userId;
             await _context.Services.AddAsync(service);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return service;
             
         }
@@ -66,7 +66,7 @@ namespace IOT.Services{
                 }
             }
             _context.Services.Update(preService);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
 
         }
@@ -79,7 +79,7 @@ namespace IOT.Services{
 
             service.Status=(byte)MyEnums.ServiceStatus.DELETED;
             _context.Services.Update(service);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
         }
 

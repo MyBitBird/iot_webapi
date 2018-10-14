@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using IOT.DTO;
 
 
 namespace IOT.DTO
@@ -10,6 +12,8 @@ namespace IOT.DTO
         public string Password { get; set; }
         public string Name { get; set; }
         public string Family { get; set; }
+
+        public ICollection<ServiceUsersDTO> ServiceUsers { get; set; }
        
     }
     
