@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace IOT.DTO
 {
-    public class ServiceLogSTO
+    public class ServiceLogDTO
     {
         public Guid ServiceId { get; set; }
         public DateTime LogDate { get; set; }
