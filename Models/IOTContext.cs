@@ -24,7 +24,7 @@ namespace IOT.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-          
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -43,7 +43,15 @@ namespace IOT.Models
                     .HasColumnName("data")
                     .HasColumnType("character varying");
 
+                entity.Property(e => e.ServiceLogId).HasColumnName("service_log_id");
+
                 entity.Property(e => e.ServicePropertyId).HasColumnName("service_property_id");
+
+                entity.HasOne(d => d.ServiceLog)
+                    .WithMany(p => p.ServiceData)
+                    .HasForeignKey(d => d.ServiceLogId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("service_data_service_logs_fk");
 
                 entity.HasOne(d => d.ServiceProperty)
                     .WithMany(p => p.ServiceData)
