@@ -75,6 +75,37 @@ namespace IOT.Controllers
 
 
         }
+
+        [HttpPut("Profile"),Authorize]
+        public async Task<IActionResult> EditProfile([FromBody] UserDTO dto)
+        {
+            if (!this.ModelState.IsValid)
+                return BadRequest();
+            
+            Guid userId = Utility.GetCurrentUserID(User);
+            Users user = _mapper.Map<Users>(dto);
+
+            bool result = await _service.EditProfile(userId,user,dto.OldPassword);
+            if(result) return Ok();
+            return StatusCode(403,new {result = "Wrong Password!"});
+
+
+        }
+
+        [HttpPut("{id}"),Authorize]
+        public async Task<IActionResult> UpdateSubUsers(Guid id, [FromBody] UserDTO dto)
+        {
+            if (!this.ModelState.IsValid)
+                return BadRequest();
+
+            Guid parentId = Utility.GetCurrentUserID(User);
+            Users user = _mapper.Map<Users>(dto);
+
+            bool result=await  _service.UpdateSubUsers(id,parentId,user,await _serviceService.GetByUserId(parentId));
+            if(result) return Ok();
+            return StatusCode(403, new { result = "Invalid Access" });
+
+        }
         
 
 
