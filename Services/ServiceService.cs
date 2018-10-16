@@ -28,6 +28,11 @@ namespace IOT.Services{
             
         }
 
+        public async Task<bool> HaveUserAccess(Guid userId,Guid serviceId)
+        {
+            return await _context.ServiceUsers.AnyAsync(x=>x.ServiceId==serviceId && x.UserId==userId && x.Deleted==false);
+        }
+
         public async Task<Models.Services> GetById(Guid id,Guid userId)
         {
             return await _context.Services.Include(i=>i.ServiceProperties).FirstOrDefaultAsync(x=>x.Id==id && x.UserId==userId);

@@ -6,7 +6,7 @@ namespace IOT.Validators
 
     public class ServiceLogValidator : AbstractValidator<ServiceLogDTO>
     {
-        ServiceLogValidator()
+        public ServiceLogValidator()
         {
             RuleFor(x=>x.ServiceId).NotEmpty().NotNull();
             RuleFor(x=>x.LogDate).NotEmpty().NotNull();
