@@ -1,0 +1,418 @@
+{
+	"info": {
+		"name": "IOT",
+		"_postman_id": "708b2cb3-2e07-23d5-d66a-a36837cf2ab6",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authenticate",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Username\": \"admin\",\"Password\": \"123\" }"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/Users/Authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"Users",
+						"Authenticate"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Services - New",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiTWVpc2FtIiwiU3RhdHVzIjoiMSIsIklEIjoiMjJmZTY2M2MtYzcyNC00NmM5LWJlNzEtMmZiYTU4NzNhZmY5IiwiZXhwIjoxNTM5MTE0NjY0LCJpc3MiOiJodHRwOi8vYml0YmlyZC5pci8iLCJhdWQiOiJodHRwOi8vYml0YmlyZC5pci8ifQ.yPvAgDpZvHh8l6JY6jtle52oKH8dibZm1Dgd2uieMJI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"title\":\"My Assume Service!\",\n\t\"serviceProperties\" : [\n\t\t{\n\t\t\t\"title\":\"Latitude\",\n\t\t\t\"code\":\"Lat\"\n\t\t},\n\t\t{\n\t\t\t\"title\":\"Longitude\",\n\t\t\t\"code\":\"Lon\"\n\t\t\t\n\t\t}\n\t]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/Services",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"Services"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Services - Update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiTWVpc2FtIiwiU3RhdHVzIjoiMSIsIklEIjoiMjJmZTY2M2MtYzcyNC00NmM5LWJlNzEtMmZiYTU4NzNhZmY5IiwiZXhwIjoxNTM5MTE0NjY0LCJpc3MiOiJodHRwOi8vYml0YmlyZC5pci8iLCJhdWQiOiJodHRwOi8vYml0YmlyZC5pci8ifQ.yPvAgDpZvHh8l6JY6jtle52oKH8dibZm1Dgd2uieMJI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"title\" : \"Update GPS Service\",\n\t\n\t\"serviceProperties\":[\n\t\t{\n\t\t\t\"title\":\"new lat\",\n\t\t\t\"code\": \"new code\"\n\t\t\t\n\t\t},\n\t\t{\n\t\t\t\"title\":\"new long\",\n\t\t\t\"code\": \"new long\"\n\t\t\t\n\t\t}\n\t]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/Services/88eb66f2-45dd-43fb-b00f-bff645831b31",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"Services",
+						"88eb66f2-45dd-43fb-b00f-bff645831b31"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Services - Delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiTWVpc2FtIiwiU3RhdHVzIjoiMSIsIklEIjoiMjJmZTY2M2MtYzcyNC00NmM5LWJlNzEtMmZiYTU4NzNhZmY5IiwiZXhwIjoxNTM5MDI2NDcxLCJpc3MiOiJodHRwOi8vYml0YmlyZC5pci8iLCJhdWQiOiJodHRwOi8vYml0YmlyZC5pci8ifQ.LVrvDLPqkeGDZzLYGszSiIOgq7ynk_fCp0bfuum3mO0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/Services/c0cc3d48-b2f3-4d1a-92db-28957b29f81b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"Services",
+						"c0cc3d48-b2f3-4d1a-92db-28957b29f81b"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Services - Get Users Service",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiTWVpc2FtIiwiU3RhdHVzIjoiMSIsIklEIjoiMjJmZTY2M2MtYzcyNC00NmM5LWJlNzEtMmZiYTU4NzNhZmY5IiwiZXhwIjoxNTM5MDI2NDcxLCJpc3MiOiJodHRwOi8vYml0YmlyZC5pci8iLCJhdWQiOiJodHRwOi8vYml0YmlyZC5pci8ifQ.LVrvDLPqkeGDZzLYGszSiIOgq7ynk_fCp0bfuum3mO0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/Services/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"Services",
+						""
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Services - Get By Id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiTWVpc2FtIiwiU3RhdHVzIjoiMSIsIklEIjoiMjJmZTY2M2MtYzcyNC00NmM5LWJlNzEtMmZiYTU4NzNhZmY5IiwiZXhwIjoxNTM5MDI2NDcxLCJpc3MiOiJodHRwOi8vYml0YmlyZC5pci8iLCJhdWQiOiJodHRwOi8vYml0YmlyZC5pci8ifQ.LVrvDLPqkeGDZzLYGszSiIOgq7ynk_fCp0bfuum3mO0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/Services/c0cc3d48-b2f3-4d1a-92db-28957b29f81b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"Services",
+						"c0cc3d48-b2f3-4d1a-92db-28957b29f81b"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Users - Signup",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"bitbird\",\n\t\"password\":\"12345\",\n\t\"name\":\"Meisam\",\n\t\"family\":\"Malekzadeh\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/users/Signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"users",
+						"Signup"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Users - Add Sub User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiTWVpc2FtIiwiU3RhdHVzIjoiMSIsIklEIjoiMjJmZTY2M2MtYzcyNC00NmM5LWJlNzEtMmZiYTU4NzNhZmY5IiwiZXhwIjoxNTM5NjI3MDc3LCJpc3MiOiJodHRwOi8vYml0YmlyZC5pci8iLCJhdWQiOiJodHRwOi8vYml0YmlyZC5pci8ifQ.s8nSWT-7Vya9tNqUYRW7kWxnZXEY7d1p8yVuIP7-IDk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"mydevice\",\n\t\"password\":\"12345\",\n\t\"name\":\"cargps\",\n\t\"family\":\"alpha\",\n\t\"ServiceUsers\":[\n\t\t{\"serviceId\":\"b3c231b5-b888-408a-bcab-9af5087e6db7\"},\n\t\t{\"serviceId\":\"c0cc3d48-b2f3-4d1a-92db-28957b29f81b\"}\n\t\t]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/users/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"users",
+						""
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Users - Edit Profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiTWVpc2FtIiwiU3RhdHVzIjoiMSIsIklEIjoiMjJmZTY2M2MtYzcyNC00NmM5LWJlNzEtMmZiYTU4NzNhZmY5IiwiZXhwIjoxNTM5NzE2OTUyLCJpc3MiOiJodHRwOi8vYml0YmlyZC5pci8iLCJhdWQiOiJodHRwOi8vYml0YmlyZC5pci8ifQ.vAagtRfLtttN9zXG_e1Wp84uQWO2QR3sGuq5eLFAKb0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"bitbird\",\n\t\"password\":\"123456789\",\n\t\"oldPassword\":\"12345\",\n\t\"name\":\"Meisammalekzadeh@gmail.com\",\n\t\"family\":\"Malekzadeh\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/users/Profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"users",
+						"Profile"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Users - Edit SubUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiTWVpc2FtIiwiU3RhdHVzIjoiMSIsIklEIjoiMjJmZTY2M2MtYzcyNC00NmM5LWJlNzEtMmZiYTU4NzNhZmY5IiwiZXhwIjoxNTM5NzE2OTUyLCJpc3MiOiJodHRwOi8vYml0YmlyZC5pci8iLCJhdWQiOiJodHRwOi8vYml0YmlyZC5pci8ifQ.vAagtRfLtttN9zXG_e1Wp84uQWO2QR3sGuq5eLFAKb0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"mydevice\",\n\t\"password\":\"\",\n\t\"name\":\"my super asume device\",\n\t\"family\":\"IOT\",\n\t\"serviceUsers\":[\n\t\t{\"serviceId\":\"7a189116-fdb8-481b-81d3-97e5bf2f8306\"}\n\t\t]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/users/04bb94bc-2e2e-4498-a658-6ec5f70f3b80",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"users",
+						"04bb94bc-2e2e-4498-a658-6ec5f70f3b80"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Data - Log Data",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiRXNmYWhhbiBEZXZpY2UiLCJTdGF0dXMiOiIxIiwiSUQiOiIwNGJiOTRiYy0yZTJlLTQ0OTgtYTY1OC02ZWM1ZjcwZjNiODAiLCJleHAiOjE1Mzk4MDg1NjcsImlzcyI6Imh0dHA6Ly9iaXRiaXJkLmlyLyIsImF1ZCI6Imh0dHA6Ly9iaXRiaXJkLmlyLyJ9.Kd2llWLAzD61BTAllG-_xNgXliV_xtEuUqWAmx-QYoM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"ServiceId\" : \"7a189116-fdb8-481b-81d3-97e5bf2f8306\",\n\t\"LogDate\": \"2018-01-01 10:11:15\",\n\t\"ServiceData\":\n\t[\n\t\t{\n\t\t\t\"code\" : \"lat\",\n\t\t\t\"data\" : \"35.3535\"\n\t\t\t\n\t\t},\n\t\t{\n\t\t\t\"code\" : \"lng\",\n\t\t\t\"data\" : \"51.3535\"\n\t\t\t\n\t\t}\n\t]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/Data",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"Data"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
