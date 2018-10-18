@@ -15,12 +15,13 @@ namespace IOT.Helper
     public static class Utility
     {
 
-        public static string BuildToken(Models.Users user, IConfiguration _config)
+        public static string BuildToken(Models.Users user, IConfiguration _config,String role)
         {
             var claims = new[] {
                 new Claim("Name", user.Name),
                 new Claim("Status", user.Status.ToString()),
                 new Claim("ID", user.Id.ToString()),
+                new Claim(ClaimTypes.Role, role),//ADMIN,DEVICE
                 
             };
 

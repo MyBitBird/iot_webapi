@@ -43,7 +43,8 @@ namespace IOT.Controllers
             Users login_user= _service.Authenticate(dto.Username,dto.Password);
             if(login_user ==null) return Unauthorized();
 
-            return Ok(new {login_user.Id,token= Utility.BuildToken(login_user,_config) });
+            return Ok(new {login_user.Id,
+                           token= Utility.BuildToken(login_user,_config,login_user.Type==(byte)MyEnums.UserTypes.ADMIN ? "ADMIN" : "DEVICE") });
 
         }
 
@@ -55,11 +56,12 @@ namespace IOT.Controllers
 
             Users user = _mapper.Map<Users>(dto);
             user=await _service.SignUp(user);
-            return Ok(new { user.Id, token = Utility.BuildToken(user, _config) });
+            return Ok(new { user.Id, token = Utility.BuildToken(user, _config,"ADMIN") });
             
         }
 
-        [HttpPost,Authorize]
+        [HttpPost]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> NewUser([FromBody] UserDTO dto)
         {
             if (!this.ModelState.IsValid)
@@ -70,13 +72,14 @@ namespace IOT.Controllers
             
             user = await _service.AddUser(user,userId,await _serviceService.GetByUserId(userId));
             if(user==null) return Forbid();
-            return Ok(new { user.Id, token = Utility.BuildToken(user, _config) });
+            return Ok(new { user.Id, token = Utility.BuildToken(user, _config,"DEVICE") });
             
 
 
         }
 
-        [HttpPut("Profile"),Authorize]
+        [HttpPut("Profile")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> EditProfile([FromBody] UserDTO dto)
         {
             if (!this.ModelState.IsValid)
@@ -92,7 +95,8 @@ namespace IOT.Controllers
 
         }
 
-        [HttpPut("{id}"),Authorize]
+        [HttpPut("{id}")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> UpdateSubUsers(Guid id, [FromBody] UserDTO dto)
         {
             if (!this.ModelState.IsValid)

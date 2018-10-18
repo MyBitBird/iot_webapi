@@ -29,7 +29,8 @@ namespace IOT.Controllers
             
         }
 
-        [HttpPost,Authorize]
+        [HttpPost]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> NewService([FromBody] ServiceDTO dto)
         {
             if(!this.ModelState.IsValid)
@@ -46,7 +47,8 @@ namespace IOT.Controllers
 
         }
 
-        [HttpPut("{id}"),Authorize]
+        [HttpPut("{id}")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> UpdateService(Guid id,[FromBody] ServiceDTO dto)
         {
             if(!this.ModelState.IsValid)
@@ -58,7 +60,8 @@ namespace IOT.Controllers
 
         }
 
-        [HttpDelete("{id}"),Authorize]
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Delete(Guid id)
         {
             Guid userId = Utility.GetCurrentUserID(User);
@@ -66,14 +69,16 @@ namespace IOT.Controllers
             return Ok(await _service.Delete(id,userId));
         }
 
-        [HttpGet,Authorize]
+        [HttpGet]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> GetMyServices()
         {
             Guid userId = Utility.GetCurrentUserID(User);
             return Ok(_mapper.Map<IList<ServiceDTO>>(await _service.GetByUserId(userId)));
         }
 
-        [HttpGet("{id}"),Authorize]
+        [HttpGet("{id}")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> GetServiceById(Guid id)
         {
             Guid userId = Utility.GetCurrentUserID(User);

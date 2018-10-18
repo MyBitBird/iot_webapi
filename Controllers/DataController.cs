@@ -33,7 +33,8 @@ namespace IOT.Controllers
 
         }
 
-        [HttpPost,Authorize]
+        [HttpPost]
+        [Authorize(Roles = "DEVICE")]
         public async Task<IActionResult> AddData([FromBody] ServiceLogDTO dto)
         {
             if (!this.ModelState.IsValid)
@@ -53,7 +54,8 @@ namespace IOT.Controllers
             
         }
 
-        [HttpPost("{serviceId}"), Authorize]
+        [HttpPost("{serviceId}")]
+        [Authorize(Roles = "DEVICE")]
         public async Task<IActionResult> AddDataWithQuery(Guid serviceId,[FromQuery]DateTime logDate,String data)
         {
             if(logDate<new DateTime(2000,01,01) || data==null || data.Equals("")) return BadRequest();
