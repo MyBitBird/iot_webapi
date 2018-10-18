@@ -18,8 +18,8 @@ This project is simple IOT service that you can create your custom service with 
 5. Run `dotnet run` in project folder or open with Visual Studio and run it.
 
 # Run test
-1- Install [Postman](https://www.getpostman.com/)
-2- Import test collection in `Test/IOT.postman_collection.json`.
+1. Install [Postman](https://www.getpostman.com/)
+2. Import test collection in `Test/IOT.postman_collection.json`.
 
 # TODO
 - [ ] Hash Passwords
