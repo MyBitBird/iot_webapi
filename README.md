@@ -22,7 +22,7 @@ This project is a simple IOT service that you can create your custom service wit
 2. Import test collection in `Test/IOT.postman_collection.json`.
 
 # TODO
-- [ ] Hash Passwords
+- [x] Hash Passwords
 - [ ] React Client
 - [ ] API Versioning
 - [ ] Write Unit tests
