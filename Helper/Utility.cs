@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Cryptography;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 
 namespace IOT.Helper
@@ -41,6 +43,20 @@ namespace IOT.Helper
         {
             return Guid.Parse(user.Claims.FirstOrDefault(x => x.Type == "ID")?.Value);
 
+        }
+
+        public static String HashPassword(String password,IConfiguration config)
+        {
+            byte[] saltByte = Encoding.UTF8.GetBytes(config["Salt:key"]);
+
+            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+            password: password,
+            salt: saltByte,
+            prf: KeyDerivationPrf.HMACSHA1,
+            iterationCount: 10000,
+            numBytesRequested: 256 / 8));
+            return hashed;
+            
         }
 
 
