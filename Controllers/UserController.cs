@@ -55,7 +55,6 @@ namespace IOT.Controllers
                 return BadRequest();
 
             Users user = _mapper.Map<Users>(dto);
-            user.Password = Utility.HashPassword(dto.Password,_config);
             user=await _service.SignUp(user);
             return Ok(new { user.Id, token = Utility.BuildToken(user, _config,"ADMIN") });
             
@@ -70,8 +69,7 @@ namespace IOT.Controllers
             Guid userId = Utility.GetCurrentUserID(User);
 
             Users user = _mapper.Map<Users>(dto);
-            user.Password = Utility.HashPassword(dto.Password, _config);
-
+            
             user = await _service.AddUser(user,userId,await _serviceService.GetByUserId(userId));
             if(user==null) return Forbid();
             return Ok(new { user.Id, token = Utility.BuildToken(user, _config,"DEVICE") });
@@ -89,8 +87,7 @@ namespace IOT.Controllers
             
             Guid userId = Utility.GetCurrentUserID(User);
             Users user = _mapper.Map<Users>(dto);
-            user.Password =dto.Password.Equals("") ? "" : Utility.HashPassword(dto.Password, _config);
-            
+                        
             bool result = await _service.EditProfile(userId,user,Utility.HashPassword(dto.OldPassword,_config));
             if(result) return Ok();
             return StatusCode(403,new {result = "Wrong Password!"});
@@ -107,8 +104,7 @@ namespace IOT.Controllers
 
             Guid parentId = Utility.GetCurrentUserID(User);
             Users user = _mapper.Map<Users>(dto);
-            user.Password = Utility.HashPassword(dto.Password, _config);
-
+            
             bool result=await  _service.UpdateSubUsers(id,parentId,user,await _serviceService.GetByUserId(parentId));
             if(result) return Ok();
             return StatusCode(403, new { result = "Invalid Access" });

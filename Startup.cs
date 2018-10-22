@@ -50,7 +50,11 @@ namespace IOT
             });
 
             services.AddDbContext<IOTContext>(options => options.UseNpgsql(Configuration.GetConnectionString("IOTDatabase")));
-            services.AddAutoMapper();
+            services.AddSingleton(provider => new MapperConfiguration(cfg =>
+                {
+                    cfg.AddProfile(new IOT.Helper.AutoMapper(Configuration));
+                }).CreateMapper());
+            //services.AddAutoMapper();
             services.AddMvc().AddFluentValidation(fvc =>
                 fvc.RegisterValidatorsFromAssemblyContaining<Startup>()).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
