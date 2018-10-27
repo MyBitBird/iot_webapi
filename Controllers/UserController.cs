@@ -48,6 +48,14 @@ namespace IOT.Controllers
 
         }
 
+        [HttpPost("Refresh")]
+        [Authorize]
+        public async Task<IActionResult> RefreshToken()
+        {
+            Users logedInUser= await _service.GetById(Utility.GetCurrentUserID(User));
+            return Ok(new {token = Utility.BuildToken(logedInUser, _config,Utility.GetCurrentUserRole(User))});
+        }
+
         [HttpPost("SignUp"),AllowAnonymous]
         public async Task<IActionResult> SignUp([FromBody] UserDTO dto)
         {
@@ -73,7 +81,6 @@ namespace IOT.Controllers
             user = await _service.AddUser(user,userId,await _serviceService.GetByUserId(userId));
             if(user==null) return Forbid();
             return Ok(new { user.Id, token = Utility.BuildToken(user, _config,"DEVICE") });
-            
 
 
         }

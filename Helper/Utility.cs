@@ -44,6 +44,11 @@ namespace IOT.Helper
             return Guid.Parse(user.Claims.FirstOrDefault(x => x.Type == "ID")?.Value);
 
         }
+        public static string GetCurrentUserRole(ClaimsPrincipal user)
+        {
+            return user.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
+
+        }
 
         public static String HashPassword(String password,IConfiguration config)
         {
