@@ -48,6 +48,12 @@ namespace IOT
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                 };
             });
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
 
             services.AddDbContext<IOTContext>(options => options.UseNpgsql(Configuration.GetConnectionString("IOTDatabase")));
             services.AddSingleton(provider => new MapperConfiguration(cfg =>
@@ -73,6 +79,7 @@ namespace IOT
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
+            app.UseCors("MyPolicy");
             app.UseMvc();
         }
     }
