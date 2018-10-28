@@ -48,7 +48,7 @@ namespace IOT.Controllers
 
         }
 
-        [HttpPost("Refresh")]
+        [HttpGet("Refresh")]
         [Authorize]
         public async Task<IActionResult> RefreshToken()
         {
