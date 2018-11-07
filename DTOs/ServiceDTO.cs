@@ -7,6 +7,8 @@ namespace IOT.DTO
     {
         public string title {set;get;}
 
+        public Guid? Id { get; set; }
+
         public ICollection<ServicePropertiesDTO> ServiceProperties { get; set; }
 
 

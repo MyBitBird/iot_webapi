@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using IOT.Models;
 using IOT.Helper;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace IOT.Services{
 
@@ -35,12 +36,14 @@ namespace IOT.Services{
 
         public async Task<Models.Services> GetById(Guid id,Guid userId)
         {
-            return await _context.Services.Include(i=>i.ServiceProperties).FirstOrDefaultAsync(x=>x.Id==id && x.UserId==userId);
+            Models.Services service= await _context.Services.AsNoTracking().Include(i=>i.ServiceProperties).FirstOrDefaultAsync(x=>x.Id==id && x.UserId==userId && x.Status == (byte)MyEnums.ServiceStatus.ACTIVE);
+            service.ServiceProperties= service.ServiceProperties.Where(x=>x.Deleted==false).ToArray();
+            return service;
         }
 
         public async Task<Models.Services[]> GetByUserId(Guid userId)
         {
-            return await _context.Services.Where(x => x.UserId == userId).ToArrayAsync();
+            return await _context.Services.Where(x => x.UserId == userId && x.Status==(byte)MyEnums.ServiceStatus.ACTIVE).ToArrayAsync();
         }
 
         public async Task<Boolean> UpdateService(Guid id, Models.Services service,Guid userId)
@@ -51,26 +54,36 @@ namespace IOT.Services{
 
             preService.Title = service.Title;
 
-            foreach(ServiceProperties property in preService.ServiceProperties)
+            List<ServiceProperties> newProperties = service.ServiceProperties.ToList();
+
+            List<ServiceProperties> oldProperties = preService.ServiceProperties.ToList();
+
+            preService.ServiceProperties = null;//becuase we will see stupid error in add new item : exception collection was of a fixed size entity framework
+
+            foreach(ServiceProperties property in oldProperties)  
             {
-                if(service.ServiceProperties.Any(x=>x.Code==property.Code)) continue;
-                else 
+                ServiceProperties isPropertyExist = service.ServiceProperties.FirstOrDefault(x => x.Id == property.Id);
+                if(isPropertyExist!=null)
                 {
+                    property.Title = isPropertyExist.Title;
+                    property.Code = isPropertyExist.Code;
+                    newProperties.Remove(isPropertyExist);
+                } 
+                else 
                     property.Deleted=true;
-                    _context.ServiceProperties.Update(property);
-                }
+                    
+               _context.ServiceProperties.Update(property);
             }
 
-            foreach (ServiceProperties property in service.ServiceProperties)
-            {
-                if (preService.ServiceProperties.Any(x => x.Code == property.Code)) continue;
-                else
-                {
-                    property.ServiceId=id;                    
-                    await _context.ServiceProperties.AddAsync(property);
-                }
-            }
             _context.Services.Update(preService);
+
+           foreach (ServiceProperties property in newProperties)
+            {
+                property.ServiceId = id;
+                _context.ServiceProperties.Add(property);
+              
+            }
+            
             await _context.SaveChangesAsync();
             return true;
 
