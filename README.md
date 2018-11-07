@@ -1,4 +1,4 @@
-# Simple IOT Service with .Net Core 2 Web API - Best Practice
+# Simple IOT Service with .Net Core 2 Web API 
 
 This project is a simple IOT service that you can create your custom service with its fields and properties, define devices and authorize them to send data via URL or JSON.
 
@@ -23,7 +23,7 @@ This project is a simple IOT service that you can create your custom service wit
 
 # TODO
 - [x] Hash Passwords
-- [ ] React Client
+- [ ] React Client - under developing 30%
 - [ ] API Versioning
 - [ ] Write Unit tests
 
