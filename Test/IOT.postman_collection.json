@@ -413,6 +413,105 @@
 				"description": ""
 			},
 			"response": []
+		},
+		{
+			"name": "Refresh Token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiTWVpc2FtbWFsZWt6YWRlaEBnbWFpbC5jb20iLCJTdGF0dXMiOiIxIiwiSUQiOiJlNmE2YWNhNi1mZWJmLTQyM2MtODczNi00NjEwOWVjMjMxNzgiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBRE1JTiIsImV4cCI6MTU0MDc0NzA3MiwiaXNzIjoiaHR0cDovL2JpdGJpcmQuaXIvIiwiYXVkIjoiaHR0cDovL2JpdGJpcmQuaXIvIn0.PXZNNgxuGmGFbkeSSWF3W8hyYwekkqyUjaNK2P4PRhU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/Users/Refresh",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"Users",
+						"Refresh"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Users - Get SubUsers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiTWVpc2FtIiwiU3RhdHVzIjoiMSIsIklEIjoiNTdlODJkNTctZjgzNi00OWJlLTgzZTktOGIzMTI1YWZjMTJjIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQURNSU4iLCJleHAiOjE1NDE4NjU5MzQsImlzcyI6Imh0dHA6Ly9iaXRiaXJkLmlyLyIsImF1ZCI6Imh0dHA6Ly9iaXRiaXJkLmlyLyJ9.w6RcwOYeoRfbbJgXQIUYFzaN5Ut8ddCui6MgBCdup6g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/users/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"users",
+						""
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Users - Delete SubUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiTWVpc2FtIiwiU3RhdHVzIjoiMSIsIklEIjoiNTdlODJkNTctZjgzNi00OWJlLTgzZTktOGIzMTI1YWZjMTJjIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQURNSU4iLCJleHAiOjE1NDIyMTI5NTIsImlzcyI6Imh0dHA6Ly9iaXRiaXJkLmlyLyIsImF1ZCI6Imh0dHA6Ly9iaXRiaXJkLmlyLyJ9.bbHafO5T9KWqM3mvSHGotnp26B-NgM8zgn0r7XIEuzc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/users/cc7d97f0-5442-433a-852f-53b8dd960a11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"users",
+						"cc7d97f0-5442-433a-852f-53b8dd960a11"
+					]
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }

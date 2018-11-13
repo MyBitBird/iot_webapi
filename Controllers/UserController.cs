@@ -117,8 +117,23 @@ namespace IOT.Controllers
             return StatusCode(403, new { result = "Invalid Access" });
 
         }
-        
 
+        [Authorize(Roles = "ADMIN")]
+        [HttpGet]
+        public async Task<IActionResult> GetSubUsers()
+        {
+            Guid parentId = Utility.GetCurrentUserID(User);
+            return Ok(_mapper.Map<UserDTO[]>(await _service.GetSubUsers(parentId))); 
+        }
+
+        [Authorize(Roles = "ADMIN")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteSubUser(Guid id)
+        {
+            Guid parentId = Utility.GetCurrentUserID(User);
+            return Ok(await _service.DeleteSubUser(id,parentId));
+
+        }
 
     }
 }

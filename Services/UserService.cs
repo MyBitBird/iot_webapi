@@ -26,12 +26,17 @@ namespace IOT.Services
         }
         public async Task<Users> GetByIdAndParentId(Guid id,Guid parentId)
         {
-            return await _context.Users.Include(i=>i.ServiceUsers).FirstOrDefaultAsync(x => x.Id == id && x.ParentUserId==parentId);
+            return await _context.Users.Include(i=>i.ServiceUsers).FirstOrDefaultAsync(x => x.Id == id && x.ParentUserId == parentId && x.Status == (byte)MyEnums.UserStatus.ACTIVE);
+        }
+
+        public async Task<Users[]> GetSubUsers(Guid parentId)
+        {
+            return await _context.Users.Include(i => i.ServiceUsers).Where(x => x.ParentUserId == parentId && x.Status == (byte)MyEnums.UserStatus.ACTIVE).ToArrayAsync();
         }
 
         public Users Authenticate(string username, string password)
         {
-            return _context.Users.FirstOrDefault(x => x.Username == username && x.Password == password);//#warning always encrypt your password!
+            return _context.Users.FirstOrDefault(x => x.Username == username && x.Password == password && x.Status == (byte)MyEnums.UserStatus.ACTIVE);//#warning always encrypt your password!
         }
 
         public async Task<Users> SignUp(Users user)
@@ -88,6 +93,8 @@ namespace IOT.Services
         public async Task<bool> UpdateSubUsers(Guid id,Guid parentId,Users user,Models.Services[] validServices)
         {
             Users oldUser = await GetByIdAndParentId(id,parentId);
+            if (oldUser == null) return false;
+
             oldUser.Username = user.Username;
             oldUser.Name = user.Name;
             oldUser.Family = user.Family;
@@ -113,7 +120,17 @@ namespace IOT.Services
 
         }
 
+        public async Task<bool> DeleteSubUser(Guid id,Guid parentId)
+        {
+            Users oldUser = await GetByIdAndParentId(id, parentId);
+            if(oldUser == null) return false;
 
+            oldUser.Status = (short)MyEnums.UserStatus.DELETED;
+            _context.Users.Update(oldUser);
+            _context.SaveChanges();
+            return true;
+
+        }
 
     }
 }

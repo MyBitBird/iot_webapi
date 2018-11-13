@@ -18,8 +18,12 @@ namespace IOT.Helper
             CreateMap<UserDTO,Users>()
                 .ForMember(d=>d.Password,
                            OperatingSystem=>OperatingSystem.MapFrom(s=>s.Password.Equals("") ?  "" : Utility.HashPassword(s.Password,config)));
+            CreateMap<Users,UserDTO>().ForMember(d => d.Password,s=>s.UseValue(""));
+            
             CreateMap<ServiceUsersDTO,ServiceUsers>().ReverseMap();
             CreateMap<ServiceLogDTO, ServiceLogs>().ForMember(d=>d.ServiceData,s=>s.Ignore());
+
+
         }
     }
 }
