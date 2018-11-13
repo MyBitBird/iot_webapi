@@ -512,6 +512,39 @@
 				"description": ""
 			},
 			"response": []
+		},
+		{
+			"name": "Users - Get By Id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiTWVpc2FtIiwiU3RhdHVzIjoiMSIsIklEIjoiNTdlODJkNTctZjgzNi00OWJlLTgzZTktOGIzMTI1YWZjMTJjIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQURNSU4iLCJleHAiOjE1NDIyMTY5NDMsImlzcyI6Imh0dHA6Ly9iaXRiaXJkLmlyLyIsImF1ZCI6Imh0dHA6Ly9iaXRiaXJkLmlyLyJ9.LmugzFinYbfiWaUXFVOYnLG13weBCKFWCnam6l1KCfc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/users/f7808219-1980-4652-8bb2-dca5a04ebc56",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"users",
+						"f7808219-1980-4652-8bb2-dca5a04ebc56"
+					]
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }

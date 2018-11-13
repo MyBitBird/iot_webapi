@@ -135,5 +135,16 @@ namespace IOT.Controllers
 
         }
 
+        [Authorize(Roles = "ADMIN")]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserById(Guid id)
+        {
+            Guid parentId = Utility.GetCurrentUserID(User);
+            return Ok(_mapper.Map<UserDTO>(await _service.GetByIdAndParentId(id,parentId)));
+
+        }
+
     }
+
+   
 }

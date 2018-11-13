@@ -26,7 +26,9 @@ namespace IOT.Services
         }
         public async Task<Users> GetByIdAndParentId(Guid id,Guid parentId)
         {
-            return await _context.Users.Include(i=>i.ServiceUsers).FirstOrDefaultAsync(x => x.Id == id && x.ParentUserId == parentId && x.Status == (byte)MyEnums.UserStatus.ACTIVE);
+            Users user= await _context.Users.AsNoTracking().Include(i=>i.ServiceUsers).FirstOrDefaultAsync(x => x.Id == id && x.ParentUserId == parentId && x.Status == (byte)MyEnums.UserStatus.ACTIVE);
+            user.ServiceUsers = user.ServiceUsers.Where(x => x.Deleted == false).ToArray();
+            return user;
         }
 
         public async Task<Users[]> GetSubUsers(Guid parentId)
@@ -99,14 +101,20 @@ namespace IOT.Services
             oldUser.Name = user.Name;
             oldUser.Family = user.Family;
             oldUser.Password =  user.Password.Trim().Equals("") ?  oldUser.Password : user.Password;
-            
-            foreach(var service in oldUser.ServiceUsers)
+
+            List<ServiceUsers> oldServices = oldUser.ServiceUsers.ToList();
+
+            List<ServiceUsers> newServices = user.ServiceUsers.ToList();
+
+            oldUser.ServiceUsers = null ; //to get ride of exception collection was of a fixed size error
+
+            foreach(var service in oldServices)
             {
                 service.Deleted=true;
                 _context.ServiceUsers.Update(service);
             }
 
-            foreach (var service in user.ServiceUsers)
+            foreach (var service in newServices)
             {
                 service.RegisterDate = DateTime.Now;
                 service.UserId=id;
