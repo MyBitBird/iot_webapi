@@ -9,6 +9,15 @@ This project is a simple IOT service that you can create your custom service wit
 * FluentValidation
 * DTO transfer model
 
+# Functionality overview
+* CRUD Users (SignUp - Login - Create-Edit-Delete Subusers(devices) )
+* CRUD Services
+* CRUD Service properties
+* CR** Device data (Get data with JSON & Url)
+* Get Device Data with rest filters
+* Assign properties to service
+* Assign users(devices) to service
+
 # How to run
 .Net Core is cross-platform, I developed this project on Linux but steeps are same.
 1. install `.Net Core 2 SDK` , `PostgreSQL` , and maybe PostgreSQL GUI like `pgAdmin` or `DBeaver` in your system.
@@ -21,9 +30,13 @@ This project is a simple IOT service that you can create your custom service wit
 1. Install [Postman](https://www.getpostman.com/)
 2. Import test collection in `Test/IOT.postman_collection.json`.
 
+# Clients
+* My React.js client: [iot-react-client](https://github.com/MyBitBird/iot-react-client) 
+
+
 # TODO
 - [x] Hash Passwords
-- [ ] React Client - under developing 30%
+- [x] React Client 
 - [ ] API Versioning
 - [ ] Write Unit tests
 

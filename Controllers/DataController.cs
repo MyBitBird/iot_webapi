@@ -46,11 +46,11 @@ namespace IOT.Controllers
             if (!await _servicesService.HaveUserAccess(userId, dto.ServiceId)) return Forbid();
 
             ServiceLogs log = _mapper.Map<ServiceLogs>(dto);
-
-            return Ok(new { _service.AddData(userId,
-                                                log,
-                                                dto.ServiceData,
-                                                await _servicePropertiesService.GetValidPropertiesByServiceId(dto.ServiceId)).Id});
+            log = await _service.AddData(userId,
+                                        log,
+                                        dto.ServiceData,
+                                        await _servicePropertiesService.GetValidPropertiesByServiceId(dto.ServiceId));
+            return Ok(log.Id);
             
         }
 
@@ -63,13 +63,13 @@ namespace IOT.Controllers
             Guid userId = Utility.GetCurrentUserID(User);
             if (!await _servicesService.HaveUserAccess(userId, serviceId)) return Forbid();
 
-            List<ServiceDataDTO> serviceData = new List<ServiceDataDTO>();
+            List<DeviceDataDTO> serviceData = new List<DeviceDataDTO>();
             String[] items= data.Split(',');
             foreach(String item in items)
             {
                 String[] value = item.Split(':');
                 if(value.Length!=2) continue;
-                serviceData.Add(new ServiceDataDTO(){Code=value[0],Data=value[1]});
+                serviceData.Add(new DeviceDataDTO(){Code=value[0],Data=value[1]});
                 
             }
             ServiceLogs logs=new ServiceLogs() { ServiceId = serviceId, LogDate = logDate };
@@ -78,6 +78,17 @@ namespace IOT.Controllers
                                            serviceData,
                                            await _servicePropertiesService.GetValidPropertiesByServiceId(serviceId));
             return Ok(new {logs.Id });
+
+        }
+
+        [HttpGet("{serviceId}")]
+        [Authorize(Roles = "ADMIN")]
+        public async Task<IActionResult> GetData(Guid serviceId,[FromQuery] FilteringParams.Data filter)
+        {
+            Models.Services service = await _servicesService.GetById(serviceId,Utility.GetCurrentUserID(User));
+            if(service == null) return Forbid();
+
+            return Ok(_mapper.Map<ServiceLogDTO[]>(await _service.GetData(serviceId, filter))); 
 
         }
     }

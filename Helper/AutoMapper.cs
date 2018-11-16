@@ -14,14 +14,28 @@ namespace IOT.Helper
         public AutoMapper(IConfiguration config)
         {
             CreateMap<ServiceDTO,Models.Services>().ReverseMap();
+            
             CreateMap<ServicePropertiesDTO,ServiceProperties>().ReverseMap();
+            
             CreateMap<UserDTO,Users>()
                 .ForMember(d=>d.Password,
                            OperatingSystem=>OperatingSystem.MapFrom(s=>s.Password.Equals("") ?  "" : Utility.HashPassword(s.Password,config)));
+            
             CreateMap<Users,UserDTO>().ForMember(d => d.Password,s=>s.UseValue(""));
             
             CreateMap<ServiceUsersDTO,ServiceUsers>().ReverseMap();
+            
             CreateMap<ServiceLogDTO, ServiceLogs>().ForMember(d=>d.ServiceData,s=>s.Ignore());
+
+            CreateMap<ServiceLogs, ServiceLogDTO>();
+            
+            CreateMap<ServiceData,DeviceDataDTO>().ForMember(x => x.Code, OperatingSystem => OperatingSystem.MapFrom(s => s.ServiceProperty.Code));
+
+            
+
+
+
+            
 
 
         }

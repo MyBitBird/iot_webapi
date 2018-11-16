@@ -10,7 +10,7 @@ namespace IOT.DTO
         public Guid ServiceId { get; set; }
         public DateTime LogDate { get; set; }
         public DateTime RegisterDate { get; set; }
-        public ICollection<ServiceDataDTO> ServiceData { get; set; }
+        public ICollection<DeviceDataDTO> ServiceData { get; set; }
 
     }
 }

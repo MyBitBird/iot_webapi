@@ -545,6 +545,71 @@
 				"description": ""
 			},
 			"response": []
+		},
+		{
+			"name": "Data - Get Data",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiTWVpc2FtIiwiU3RhdHVzIjoiMSIsIklEIjoiNTdlODJkNTctZjgzNi00OWJlLTgzZTktOGIzMTI1YWZjMTJjIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQURNSU4iLCJleHAiOjE1NDIzOTMyMTUsImlzcyI6Imh0dHA6Ly9iaXRiaXJkLmlyLyIsImF1ZCI6Imh0dHA6Ly9iaXRiaXJkLmlyLyJ9.JJrinoj8oK1XfSvOtXbpNl-GLnSlaKBbMtvWCSXNQdY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/Data/eaefa369-b844-4bf6-9a42-f42bfb2ac1cc?offset=1&limit=1&from=2018-01-05&to=2018-05-05&sort=-logDate&userId=f7808219-1980-4652-8bb2-dca5a04ebc56",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"Data",
+						"eaefa369-b844-4bf6-9a42-f42bfb2ac1cc"
+					],
+					"query": [
+						{
+							"key": "offset",
+							"value": "1",
+							"equals": true
+						},
+						{
+							"key": "limit",
+							"value": "1",
+							"equals": true
+						},
+						{
+							"key": "from",
+							"value": "2018-01-05",
+							"equals": true
+						},
+						{
+							"key": "to",
+							"value": "2018-05-05",
+							"equals": true
+						},
+						{
+							"key": "sort",
+							"value": "-logDate",
+							"equals": true
+						},
+						{
+							"key": "userId",
+							"value": "f7808219-1980-4652-8bb2-dca5a04ebc56",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }
