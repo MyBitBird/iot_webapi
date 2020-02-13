@@ -22,6 +22,7 @@ namespace IOT.Controllers
         private readonly IConfiguration _config;
         private readonly IMapper _mapper;
         private readonly ServiceService _serviceService;
+        private readonly Guid _userId;
 
         public UserController(IOTContext context, IMapper mapper, IConfiguration config)
         {
@@ -29,6 +30,7 @@ namespace IOT.Controllers
             _config = config;
             _mapper = mapper;
             _serviceService = new ServiceService(context);
+            _userId = Utility.GetCurrentUserId(User);
         }
 
         [HttpPost("Authenticate")]
@@ -53,7 +55,7 @@ namespace IOT.Controllers
         [Authorize]
         public async Task<IActionResult> RefreshToken()
         {
-            var logedInUser = await _service.GetById(Utility.GetCurrentUserId(User));
+            var logedInUser = await _service.GetById(_userId);
             return Ok(new { token = Utility.BuildToken(logedInUser, _config, Utility.GetCurrentUserRole(User)) });
         }
 
@@ -75,10 +77,9 @@ namespace IOT.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var userId = Utility.GetCurrentUserId(User);
             var user = _mapper.Map<Users>(dto);
 
-            user = await _service.AddUser(user, userId, await _serviceService.GetByUserId(userId));
+            user = await _service.AddUser(user, _userId, await _serviceService.GetByUserId(_userId));
 
             if (user == null)
                 return Forbid();
@@ -92,10 +93,9 @@ namespace IOT.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var userId = Utility.GetCurrentUserId(User);
             var user = _mapper.Map<Users>(dto);
 
-            var result = await _service.EditProfile(userId, user, Utility.HashPassword(dto.OldPassword, _config));
+            var result = await _service.EditProfile(_userId, user, Utility.HashPassword(dto.OldPassword, _config));
             if (result) return Ok();
             return StatusCode(403, new { result = "Wrong Password!" });
         }
@@ -107,7 +107,7 @@ namespace IOT.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var parentId = Utility.GetCurrentUserId(User);
+            var parentId = _userId;
             var user = _mapper.Map<Users>(dto);
 
             var result = await _service.UpdateSubUsers(id, parentId, user, await _serviceService.GetByUserId(parentId));
@@ -119,7 +119,7 @@ namespace IOT.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSubUsers()
         {
-            var parentId = Utility.GetCurrentUserId(User);
+            var parentId = _userId;
             return Ok(_mapper.Map<UserDTO[]>(await _service.GetSubUsers(parentId)));
         }
 
@@ -127,7 +127,7 @@ namespace IOT.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSubUser(Guid id)
         {
-            var parentId = Utility.GetCurrentUserId(User);
+            var parentId = _userId;
             return Ok(await _service.DeleteSubUser(id, parentId));
         }
 
@@ -135,7 +135,7 @@ namespace IOT.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(Guid id)
         {
-            var parentId = Utility.GetCurrentUserId(User);
+            var parentId = _userId;
             return Ok(_mapper.Map<UserDTO>(await _service.GetByIdAndParentId(id, parentId)));
         }
     }
