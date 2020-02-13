@@ -46,8 +46,9 @@ namespace IOT.Controllers
                 return Forbid();
 
             var log = _mapper.Map<ServiceLogs>(dto);
-            log = await _service.AddData(_userId,
-                                        log,
+            log.UserId = _userId;
+
+            log = await _service.AddData(log,
                                         dto.ServiceData,
                                         await _servicePropertiesService.GetValidPropertiesByServiceId(dto.ServiceId));
             return Ok(log.Id);
@@ -65,9 +66,14 @@ namespace IOT.Controllers
 
             var serviceData = DeserializeData(data);
 
-            var logs = new ServiceLogs() { ServiceId = serviceId, LogDate = logDate };
-            logs = await _service.AddData(_userId,
-                                           logs,
+            var logs = new ServiceLogs
+            {
+                ServiceId = serviceId,
+                LogDate = logDate,
+                UserId = _userId
+            };
+
+            logs = await _service.AddData(logs,
                                            serviceData,
                                            await _servicePropertiesService.GetValidPropertiesByServiceId(serviceId));
             return Ok(new { logs.Id });
