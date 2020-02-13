@@ -44,7 +44,7 @@ namespace IOT.Controllers
             if(login_user ==null) return Unauthorized();
 
             return Ok(new {login_user.Id,
-                           token= Utility.BuildToken(login_user,_config,login_user.Type==(byte)MyEnums.UserTypes.ADMIN ? "ADMIN" : "DEVICE") });
+                           token= Utility.BuildToken(login_user,_config,login_user.Type == MyEnums.UserTypes.ADMIN ? "ADMIN" : "DEVICE") });
 
         }
 

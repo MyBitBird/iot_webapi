@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using IOT.Helper;
 
 namespace IOT.Models
 {
@@ -18,8 +19,8 @@ namespace IOT.Models
         public string Password { get; set; }
         public string Name { get; set; }
         public string Family { get; set; }
-        public short Status { get; set; }
-        public short Type { get; set; }
+        public MyEnums.UserStatus Status { get; set; }
+        public MyEnums.UserTypes Type { get; set; }
         public DateTime RegisterDate { get; set; }
         public Guid? ParentUserId { get; set; }
 
