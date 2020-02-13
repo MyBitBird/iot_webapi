@@ -55,7 +55,7 @@ namespace IOT
                        .AllowAnyHeader();
             }));
 
-            services.AddDbContext<IOTContext>(options => options.UseNpgsql(Configuration.GetConnectionString("IOTDatabase")));
+            services.AddDbContext<IOTContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IOTDatabase")));
             services.AddSingleton(provider => new MapperConfiguration(cfg =>
                 {
                     cfg.AddProfile(new IOT.Helper.AutoMapper(Configuration));
