@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace IOT.Models
 {
-    public partial class ServiceUsers
+    public class ServiceUsers
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }

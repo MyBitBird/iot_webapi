@@ -3,15 +3,8 @@ using System.Collections.Generic;
 
 namespace IOT.Models
 {
-    public partial class Services
+    public class Services
     {
-        public Services()
-        {
-            ServiceLogs = new HashSet<ServiceLogs>();
-            ServiceProperties = new HashSet<ServiceProperties>();
-            ServiceUsers = new HashSet<ServiceUsers>();
-        }
-
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
         public string Title { get; set; }

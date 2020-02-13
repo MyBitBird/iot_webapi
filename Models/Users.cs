@@ -3,14 +3,15 @@ using System.Collections.Generic;
 
 namespace IOT.Models
 {
-    public partial class Users
+    public class Users
     {
         public Users()
         {
-            ServiceLogs = new HashSet<ServiceLogs>();
-            ServiceUsers = new HashSet<ServiceUsers>();
-            Services = new HashSet<Services>();
+            //ServiceLogs = new HashSet<ServiceLogs>();
+            //ServiceUsers = new HashSet<ServiceUsers>();
+            //Services = new HashSet<Services>();
         }
+        //TODO change type and status to enum
 
         public Guid Id { get; set; }
         public string Username { get; set; }
