@@ -42,7 +42,7 @@ namespace IOT.Controllers
                 return BadRequest();
             }
 
-            Guid userId = Utility.GetCurrentUserID(User); 
+            Guid userId = Utility.GetCurrentUserId(User); 
             if (!await _servicesService.HaveUserAccess(userId, dto.ServiceId)) return Forbid();
 
             ServiceLogs log = _mapper.Map<ServiceLogs>(dto);
@@ -60,7 +60,7 @@ namespace IOT.Controllers
         {
             if(logDate<new DateTime(2000,01,01) || data==null || data.Equals("")) return BadRequest();
             
-            Guid userId = Utility.GetCurrentUserID(User);
+            Guid userId = Utility.GetCurrentUserId(User);
             if (!await _servicesService.HaveUserAccess(userId, serviceId)) return Forbid();
 
             List<DeviceDataDTO> serviceData = new List<DeviceDataDTO>();
@@ -85,7 +85,7 @@ namespace IOT.Controllers
         [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> GetData(Guid serviceId,[FromQuery] FilteringParams.Data filter)
         {
-            Models.Services service = await _servicesService.GetById(serviceId,Utility.GetCurrentUserID(User));
+            Models.Services service = await _servicesService.GetById(serviceId,Utility.GetCurrentUserId(User));
             if(service == null) return Forbid();
 
             return Ok(_mapper.Map<ServiceLogDTO[]>(await _service.GetData(serviceId, filter))); 

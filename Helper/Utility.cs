@@ -39,7 +39,7 @@ namespace IOT.Helper
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public static Guid GetCurrentUserID(ClaimsPrincipal user)
+        public static Guid GetCurrentUserId(ClaimsPrincipal user)
         {
             return Guid.Parse(user.Claims.FirstOrDefault(x => x.Type == "ID")?.Value);
 
