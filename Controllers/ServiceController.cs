@@ -19,61 +19,57 @@ namespace IOT.Controllers
     [ApiController]
     public class ServiceController : ControllerBase
     {
-        ServiceService _service;
-        IMapper _mapper;
+        private readonly ServiceService _service;
+        private readonly IMapper _mapper;
 
-        public ServiceController(IOTContext context,IMapper mapper)
+        public ServiceController(IOTContext context, IMapper mapper)
         {
             _service = new ServiceService(context);
-            _mapper=mapper;
-            
+            _mapper = mapper;
         }
 
         [HttpPost]
         [Authorize(Roles = "ADMIN")]
-        public async Task<IActionResult> NewService([FromBody] ServiceDTO dto)
+        public async Task<IActionResult> Add([FromBody] ServiceDTO dto)
         {
-            if(!this.ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            Guid userId = Utility.GetCurrentUserId(User);
+            var userId = Utility.GetCurrentUserId(User);
+            var newService = _mapper.Map<Models.Services>(dto);
 
-            Models.Services newService = _mapper.Map<Models.Services>(dto);
+            newService = await _service.NewService(newService, userId);
 
-           newService = await _service.NewService(newService,userId);
-
-           return Ok(newService.Id);
-
+            return Ok(newService.Id);
         }
 
         [HttpPut("{id}")]
         [Authorize(Roles = "ADMIN")]
-        public async Task<IActionResult> UpdateService(Guid id,[FromBody] ServiceDTO dto)
+        public async Task<IActionResult> Update(Guid id, [FromBody] ServiceDTO dto)
         {
-            if(!this.ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return BadRequest();
 
-            Guid userId = Utility.GetCurrentUserId(User);
-            Models.Services service = _mapper.Map<Models.Services>(dto);
-            return Ok(await _service.UpdateService(id, service,userId));
-
+            var userId = Utility.GetCurrentUserId(User);
+            var service = _mapper.Map<Models.Services>(dto);
+            return Ok(await _service.UpdateService(id, service, userId));
         }
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            Guid userId = Utility.GetCurrentUserId(User);
+            var userId = Utility.GetCurrentUserId(User);
 
-            return Ok(await _service.Delete(id,userId));
+            return Ok(await _service.Delete(id, userId));
         }
 
         [HttpGet]
         [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> GetMyServices()
         {
-            Guid userId = Utility.GetCurrentUserId(User);
+            var userId = Utility.GetCurrentUserId(User);
             return Ok(_mapper.Map<IList<ServiceDTO>>(await _service.GetByUserId(userId)));
         }
 
@@ -81,8 +77,8 @@ namespace IOT.Controllers
         [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> GetServiceById(Guid id)
         {
-            Guid userId = Utility.GetCurrentUserId(User);
-            return Ok(_mapper.Map<ServiceDTO>(await _service.GetById(id,userId)));
+            var userId = Utility.GetCurrentUserId(User);
+            return Ok(_mapper.Map<ServiceDTO>(await _service.GetById(id, userId)));
 
         }
     }
