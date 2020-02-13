@@ -4,14 +4,16 @@ using IOT.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IOT.Migrations
 {
     [DbContext(typeof(IOTContext))]
-    partial class IOTContextModelSnapshot : ModelSnapshot
+    [Migration("20200213153440_AddAnAdminUserToUserTableForStart")]
+    partial class AddAnAdminUserToUserTableForStart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
