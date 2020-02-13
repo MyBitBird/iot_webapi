@@ -38,7 +38,7 @@ namespace IOT.Services
         public async Task<ServiceLogs[]> GetData(Guid serviceId, FilteringParams.Data filters)
         {
             var query = _context.ServiceLogs.AsQueryable();
-            switch(filters.sort)
+            switch(filters.Sort)
             {
                 case "logDate":
                     query = query.OrderBy(x=>x.LogDate);
@@ -59,11 +59,11 @@ namespace IOT.Services
 
             return await query.Include(x => x.ServiceData).ThenInclude(y => y.ServiceProperty).Where
             (x => x.ServiceId == serviceId 
-                && (filters.userId == null || x.UserId == filters.userId )
-                && (filters.from == null || x.LogDate >= filters.from)
-                && (filters.to == null || x.LogDate <= filters.to)
+                && (filters.UserId == null || x.UserId == filters.UserId )
+                && (filters.From == null || x.LogDate >= filters.From)
+                && (filters.To == null || x.LogDate <= filters.To)
 
-            ).Skip(filters.offset).Take(filters.limit).ToArrayAsync();
+            ).Skip(filters.Offset).Take(filters.Limit).ToArrayAsync();
         }
 
     }

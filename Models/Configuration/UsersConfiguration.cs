@@ -38,8 +38,8 @@ namespace IOT.Models.Configuration
                 Password = "BitBird",
                 Name = "Meisam",
                 Family = "Malekzadeh",
-                Status = MyEnums.UserStatus.ACTIVE,
-                Type = MyEnums.UserTypes.ADMIN,
+                Status = MyEnums.UserStatus.Active,
+                Type = MyEnums.UserTypes.Admin,
                 RegisterDate = DateTime.Now
             });
         }

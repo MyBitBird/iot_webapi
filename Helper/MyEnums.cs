@@ -4,23 +4,20 @@ namespace IOT.Helper
 
         public enum ServiceStatus : short
         {
-            ACTIVE = 1,
-            DEACTICE = 2,
-            DELETED = 3
-
+            Active = 1,
+            Deactice = 2,
+            Deleted = 3
         }
-
         public enum UserStatus : short
         {
-            ACTIVE = 1,
-            DEACTIVE = 2,
-            DELETED = 3
+            Active = 1,
+            Deactive = 2,
+            Deleted = 3
         }
-
         public enum UserTypes
         {
-            ADMIN = 1,
-            DEVICE = 2
+            Admin = 1,
+            Device = 2
         }
     }
 }

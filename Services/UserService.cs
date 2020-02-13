@@ -26,26 +26,26 @@ namespace IOT.Services
         }
         public async Task<Users> GetByIdAndParentId(Guid id,Guid parentId)
         {
-            Users user= await _context.Users.AsNoTracking().Include(i=>i.ServiceUsers).FirstOrDefaultAsync(x => x.Id == id && x.ParentUserId == parentId && x.Status == MyEnums.UserStatus.ACTIVE);
+            Users user= await _context.Users.AsNoTracking().Include(i=>i.ServiceUsers).FirstOrDefaultAsync(x => x.Id == id && x.ParentUserId == parentId && x.Status == MyEnums.UserStatus.Active);
             user.ServiceUsers = user.ServiceUsers.Where(x => x.Deleted == false).ToArray();
             return user;
         }
 
         public async Task<Users[]> GetSubUsers(Guid parentId)
         {
-            return await _context.Users.Include(i => i.ServiceUsers).Where(x => x.ParentUserId == parentId && x.Status == MyEnums.UserStatus.ACTIVE).ToArrayAsync();
+            return await _context.Users.Include(i => i.ServiceUsers).Where(x => x.ParentUserId == parentId && x.Status == MyEnums.UserStatus.Active).ToArrayAsync();
         }
 
         public Users Authenticate(string username, string password)
         {
-            return _context.Users.FirstOrDefault(x => x.Username == username && x.Password == password && x.Status == MyEnums.UserStatus.ACTIVE);//#warning always encrypt your password!
+            return _context.Users.FirstOrDefault(x => x.Username == username && x.Password == password && x.Status == MyEnums.UserStatus.Active);//#warning always encrypt your password!
         }
 
         public async Task<Users> SignUp(Users user)
         {
             user.RegisterDate = DateTime.Now;
-            user.Type = MyEnums.UserTypes.ADMIN; ;
-            user.Status = MyEnums.UserStatus.ACTIVE;
+            user.Type = MyEnums.UserTypes.Admin; ;
+            user.Status = MyEnums.UserStatus.Active;
             user.Username = user.Username.ToLower();
             user.ServiceUsers = null;
             await _context.Users.AddAsync(user);
@@ -57,8 +57,8 @@ namespace IOT.Services
         public async Task<Users> AddUser(Users user, Guid parentUserId, Models.Services[] validServices)
         {
             user.RegisterDate = DateTime.Now;
-            user.Type = MyEnums.UserTypes.DEVICE;
-            user.Status = MyEnums.UserStatus.ACTIVE;
+            user.Type = MyEnums.UserTypes.Device;
+            user.Status = MyEnums.UserStatus.Active;
             user.Username = user.Username.ToLower();
             user.ParentUserId = parentUserId;
             foreach (var service in user.ServiceUsers)
@@ -133,7 +133,7 @@ namespace IOT.Services
             Users oldUser = await GetByIdAndParentId(id, parentId);
             if(oldUser == null) return false;
 
-            oldUser.Status = MyEnums.UserStatus.DELETED;
+            oldUser.Status = MyEnums.UserStatus.Deleted;
             _context.Users.Update(oldUser);
             _context.SaveChanges();
             return true;

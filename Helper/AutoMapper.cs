@@ -19,7 +19,7 @@ namespace IOT.Helper
             
             CreateMap<UserDTO,Users>()
                 .ForMember(d=>d.Password,
-                           OperatingSystem=>OperatingSystem.MapFrom(s=>s.Password.Equals("") ?  "" : Utility.HashPassword(s.Password,config)));
+                           operatingSystem=>operatingSystem.MapFrom(s=>s.Password.Equals("") ?  "" : Utility.HashPassword(s.Password,config)));
             
             CreateMap<Users,UserDTO>().ForMember(d => d.Password,s=>s.UseValue(""));
             
@@ -29,15 +29,7 @@ namespace IOT.Helper
 
             CreateMap<ServiceLogs, ServiceLogDTO>();
             
-            CreateMap<ServiceData,DeviceDataDTO>().ForMember(x => x.Code, OperatingSystem => OperatingSystem.MapFrom(s => s.ServiceProperty.Code));
-
-            
-
-
-
-            
-
-
+            CreateMap<ServiceData,DeviceDataDTO>().ForMember(x => x.Code, operatingSystem => operatingSystem.MapFrom(s => s.ServiceProperty.Code));
         }
     }
 }

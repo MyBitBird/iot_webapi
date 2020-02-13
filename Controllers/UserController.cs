@@ -47,7 +47,7 @@ namespace IOT.Controllers
             return Ok(new
             {
                 loginUser.Id,
-                token = Utility.BuildToken(loginUser, _config, loginUser.Type == MyEnums.UserTypes.ADMIN ? "ADMIN" : "DEVICE")
+                token = Utility.BuildToken(loginUser, _config, loginUser.Type == MyEnums.UserTypes.Admin ? "ADMIN" : "DEVICE")
             });
         }
 

@@ -21,7 +21,7 @@ namespace IOT.Services{
         public async Task<Models.Services> NewService(Models.Services service,Guid userId)
         {
             service.RegisterDate=DateTime.Now;
-            service.Status=MyEnums.ServiceStatus.ACTIVE;
+            service.Status=MyEnums.ServiceStatus.Active;
             service.UserId=userId;
             await _context.Services.AddAsync(service);
             await _context.SaveChangesAsync();
@@ -36,14 +36,14 @@ namespace IOT.Services{
 
         public async Task<Models.Services> GetById(Guid id,Guid userId)
         {
-            Models.Services service= await _context.Services.AsNoTracking().Include(i=>i.ServiceProperties).FirstOrDefaultAsync(x=>x.Id==id && x.UserId==userId && x.Status == MyEnums.ServiceStatus.ACTIVE);
+            Models.Services service= await _context.Services.AsNoTracking().Include(i=>i.ServiceProperties).FirstOrDefaultAsync(x=>x.Id==id && x.UserId==userId && x.Status == MyEnums.ServiceStatus.Active);
             service.ServiceProperties= service.ServiceProperties.Where(x=>x.Deleted==false).ToArray();
             return service;
         }
 
         public async Task<Models.Services[]> GetByUserId(Guid userId)
         {
-            return await _context.Services.Where(x => x.UserId == userId && x.Status == MyEnums.ServiceStatus.ACTIVE).ToArrayAsync();
+            return await _context.Services.Where(x => x.UserId == userId && x.Status == MyEnums.ServiceStatus.Active).ToArrayAsync();
         }
 
         public async Task<Boolean> UpdateService(Guid id, Models.Services service,Guid userId)
@@ -95,7 +95,7 @@ namespace IOT.Services{
 
             if (service == null) return false;
 
-            service.Status=MyEnums.ServiceStatus.DELETED;
+            service.Status=MyEnums.ServiceStatus.Deleted;
             _context.Services.Update(service);
             await _context.SaveChangesAsync();
             return true;
