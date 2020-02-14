@@ -23,7 +23,6 @@ namespace IOT.Controllers
         private readonly ServiceService _servicesService;
         private readonly ServicePropertiesService _servicePropertiesService;
         private readonly IMapper _mapper;
-        private readonly Guid _userId;
 
         public DataController(IOTContext context, IMapper mapper)
         {
@@ -31,8 +30,6 @@ namespace IOT.Controllers
             _servicesService = new ServiceService(context);
             _servicePropertiesService = new ServicePropertiesService(context);
             _mapper = mapper;
-            _userId = Utility.GetCurrentUserId(User);
-
         }
 
         [HttpPost]
@@ -41,12 +38,13 @@ namespace IOT.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest();
+            var userId = Utility.GetCurrentUserId(User);
 
-            if (!await _servicesService.HaveUserAccess(_userId, dto.ServiceId))
+            if (!await _servicesService.HaveUserAccess(userId, dto.ServiceId))
                 return Forbid();
 
             var log = _mapper.Map<ServiceLogs>(dto);
-            log.UserId = _userId;
+            log.UserId = userId;
 
             log = await _service.AddData(log,
                                         dto.ServiceData,
@@ -60,8 +58,9 @@ namespace IOT.Controllers
         {
             if (IsDataValid(logDate, data))
                 return BadRequest();
+            var userId = Utility.GetCurrentUserId(User);
 
-            if (!await _servicesService.HaveUserAccess(_userId, serviceId))
+            if (!await _servicesService.HaveUserAccess(userId, serviceId))
                 return Forbid();
 
             var serviceData = DeserializeData(data);
@@ -70,7 +69,7 @@ namespace IOT.Controllers
             {
                 ServiceId = serviceId,
                 LogDate = logDate,
-                UserId = _userId
+                UserId = userId
             };
 
             logs = await _service.AddData(logs,
@@ -106,7 +105,9 @@ namespace IOT.Controllers
         [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> GetData(Guid serviceId, [FromQuery] FilteringParams.Data filter)
         {
-            var service = await _servicesService.GetById(serviceId, _userId);
+            var userId = Utility.GetCurrentUserId(User);
+
+            var service = await _servicesService.GetById(serviceId, userId);
             if (service == null)
                 return Forbid();
 
