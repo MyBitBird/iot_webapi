@@ -3,7 +3,6 @@ using IOT.DTO;
 
 namespace IOT.Validators
 {
-
     public class ServiceLogValidator : AbstractValidator<ServiceLogDTO>
     {
         public ServiceLogValidator()
@@ -14,5 +13,4 @@ namespace IOT.Validators
             RuleForEach(x=>x.ServiceData).SetValidator(new ServiceDataValidator());
         }
     }
-
 }

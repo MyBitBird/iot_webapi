@@ -9,11 +9,8 @@ namespace IOT.Validators
         public ServiceDataValidator()
         {
             RuleFor(x=>x.Code).NotNull().NotEmpty();
-            
             RuleFor(x => x.Data).NotNull().NotEmpty();
-
             RuleFor(x => x.ServiceProperty).Null();
-
         }
     }
 }

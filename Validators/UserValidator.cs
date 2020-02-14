@@ -5,7 +5,6 @@ namespace IOT.Validators
 {
     public class UserValidator : AbstractValidator<UserDTO>
     {
-
         public UserValidator()
         {
             RuleFor(x=>x.Username).NotEmpty().NotNull();
@@ -15,5 +14,4 @@ namespace IOT.Validators
             RuleFor(x=>x.Family).NotEmpty().NotNull();
         }
     }
-
 }

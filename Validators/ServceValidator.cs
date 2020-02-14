@@ -13,5 +13,4 @@ namespace IOT.Validators
             RuleForEach(x=>x.ServiceProperties).SetValidator(new ServicePropertiesValidator());
         }
     }
-
 }
