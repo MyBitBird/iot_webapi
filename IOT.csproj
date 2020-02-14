@@ -3,6 +3,10 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Migrations\20200213153232_AddAnAdminUserToUserTableForStart.cs" />
+    <Compile Remove="Migrations\20200213153232_AddAnAdminUserToUserTableForStart.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
