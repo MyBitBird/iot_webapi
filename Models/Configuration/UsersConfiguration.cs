@@ -35,7 +35,7 @@ namespace IOT.Models.Configuration
             {
                 Id = new Guid("2C256B01-355B-4C66-9B26-B12FF6D8D1C2"),
                 Username = "BitBird",
-                Password = "BitBird",
+                Password = "PzSfdcHDcbCmM09hHXZK2bgZAFJt4aM1QahUxUROogA=",
                 Name = "Meisam",
                 Family = "Malekzadeh",
                 Status = MyEnums.UserStatus.Active,
