@@ -3,7 +3,7 @@
 This project is a simple IOT service that you can create your custom service with its fields and properties, define devices and authorize them to send data via URL or JSON.
 
 # Features
-* EF with PostgreSql DB (Although it may seem crazy but it was cool!)
+* EF Code First & Migrations
 * JWT with Role based Authentication
 * AutoMapper
 * FluentValidation
@@ -20,10 +20,10 @@ This project is a simple IOT service that you can create your custom service wit
 
 # How to run
 .Net Core is cross-platform, I developed this project on Linux but steeps are same.
-1. install `.Net Core 2 SDK` , `PostgreSQL` , and maybe PostgreSQL GUI like `pgAdmin` or `DBeaver` in your system.
-2. Restore PostgreSQL DB backup(`DB/IOT_db.backup`)
-3. Clone the project
-4. Set connection string in appsetting.json
+1. install `.Net Core 2 SDK` , `SQL Server` , and maybe `SQL Server Management Studio`.
+2. Clone the project
+3. Set connection string in appsetting.json
+4. Run `Update-Database` in Package Manager Console for restoring Database(Test username & password : `BitBird`).
 5. Run `dotnet run` in the project folder or open with Visual Studio and run it.
 
 # Run test
@@ -35,8 +35,8 @@ This project is a simple IOT service that you can create your custom service wit
 
 
 # TODO
-- [x] Hash Passwords
 - [x] React Client 
+- [ ] Hash Passwords
 - [ ] API Versioning
 - [ ] Write Unit tests
 

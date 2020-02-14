@@ -4,8 +4,6 @@ using IOT.DTO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Security.Cryptography.X509Certificates;
 using IOT.Helper;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,9 +28,10 @@ namespace IOT.Services
             log.RegisterDate = DateTime.Now;
 
             await _context.ServiceLogs.AddAsync(log);
+
             foreach (var item in data)
             {
-                ServiceProperties prop = validProperties.FirstOrDefault(x => x.Code.ToLower() == item.Code.ToLower());
+                var prop = validProperties.FirstOrDefault(x => x.Code.ToLower() == item.Code.ToLower());
                 if (prop == null) continue;
                 await _context.ServiceData.AddAsync(new ServiceData() { Data = item.Data, ServiceLogId = log.Id, ServicePropertyId = prop.Id });
             }
