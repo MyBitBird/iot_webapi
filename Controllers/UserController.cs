@@ -72,14 +72,14 @@ namespace IOT.Controllers
 
         [HttpPost]
         [Authorize(Roles = "ADMIN")]
-        public async Task<IActionResult> NewUser([FromBody] UserDTO dto)
+        public async Task<IActionResult> AddSubUser([FromBody] UserDTO dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
             var user = _mapper.Map<Users>(dto);
 
-            user = await _service.AddUser(user, _userId, await _serviceService.GetByUserId(_userId));
+            user = await _service.AddDeviceUser(user, parentUserId: _userId, validServices: await _serviceService.GetByUserId(_userId));
 
             if (user == null)
                 return Forbid();
@@ -110,7 +110,7 @@ namespace IOT.Controllers
             var parentId = _userId;
             var user = _mapper.Map<Users>(dto);
 
-            var result = await _service.UpdateSubUsers(id, parentId, user, await _serviceService.GetByUserId(parentId));
+            var result = await _service.UpdateDeviceSubUser(id, parentId, user, await _serviceService.GetByUserId(parentId));
             if (result) return Ok();
             return StatusCode(403, new { result = "Invalid Access" });
         }
