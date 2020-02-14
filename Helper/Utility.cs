@@ -36,7 +36,7 @@ namespace IOT.Helper
 
         public static Guid GetCurrentUserId(ClaimsPrincipal user)
         {
-            return Guid.Parse(user.Claims.FirstOrDefault(x => x.Type == "ID")?.Value);
+            return user == null ? Guid.Empty : Guid.Parse(user.Claims.FirstOrDefault(x => x.Type == "ID")?.Value );
         }
         public static string GetCurrentUserRole(ClaimsPrincipal user)
         {
