@@ -36,7 +36,7 @@ This project is a simple IOT service that you can create your custom service wit
 
 # TODO
 - [x] React Client 
-- [ ] Hash Passwords
+- [x] Hash Passwords
 - [ ] API Versioning
 - [ ] Write Unit tests
 

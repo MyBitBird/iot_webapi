@@ -127,6 +127,8 @@ namespace IOT.Services
             var oldServices = oldUser.ServiceUsers.ToList();
             var newServices = user.ServiceUsers.ToList();
 
+            oldUser.ServiceUsers = null;
+
             RemoveOldServices(oldServices);
             await AddNewServices(id, newServices);
 
@@ -144,7 +146,6 @@ namespace IOT.Services
             oldUser.Password =
                 CheckPasswords(user.Password, oldUser.Password,
                     oldUser.Password); //for subUser is not require to check old password
-            oldUser.ServiceUsers = null;
             return oldUser;
         }
 
