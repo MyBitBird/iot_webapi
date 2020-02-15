@@ -5,18 +5,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using IOT.Helper;
+using IOT.Storage;
 using Microsoft.EntityFrameworkCore;
 
 namespace IOT.Services
 {
+    public class DataWithProperties
+    {
+        public DeviceDataDTO DataDto { get; set; }
+        public ServiceProperties Properties { get; set; }
+    }
 
     public class ServiceLogService
     {
-        private readonly IOTContext _context;
+        private readonly IServiceLogStorage _serviceLogStorage;
 
-        public ServiceLogService(IOTContext context)
+        public ServiceLogService(IServiceLogStorage serviceLogStorage)
         {
-            _context = context;
+            _serviceLogStorage = serviceLogStorage;
         }
 
         public async Task<ServiceLogs> AddData(ServiceLogs log, ICollection<DeviceDataDTO> data,
@@ -27,17 +33,34 @@ namespace IOT.Services
 
             log.RegisterDate = DateTime.Now;
 
-            await _context.ServiceLogs.AddAsync(log);
+            await _serviceLogStorage.AddAsync(log);
 
-            foreach (var item in data)
-            {
-                var prop = validProperties.FirstOrDefault(x => x.Code.ToLower() == item.Code.ToLower());
-                if (prop == null) continue;
-                await _context.ServiceData.AddAsync(new ServiceData() { Data = item.Data, ServiceLogId = log.Id, ServicePropertyId = prop.Id });
-            }
-            await _context.SaveChangesAsync();
+            var dataWithRelatedProperty = FilterDataWithRelatedProperty(data, validProperties);
+
+            await SaveServiceData(log.Id, dataWithRelatedProperty);
+
+            await _serviceLogStorage.SaveChangesAsync();
             return log;
+        }
 
+        private async Task SaveServiceData(Guid serviceLogId, IEnumerable<DataWithProperties> dataWithProperties)
+        {
+            foreach (var obj in dataWithProperties)
+            {
+                await _serviceLogStorage.AddServiceDataAsync(new ServiceData()
+                {
+                    Data = obj.DataDto.Data,
+                    ServiceLogId = serviceLogId,
+                    ServicePropertyId = obj.Properties.Id
+                });
+            }
+        }
+
+        private static IEnumerable<DataWithProperties> FilterDataWithRelatedProperty(ICollection<DeviceDataDTO> data, ServiceProperties[] validProperties)
+        {
+            var filteredData = validProperties.Join(data, v => v.Code.ToLower(), d => d.Code.ToLower(),
+                (v, d) => new DataWithProperties() {DataDto = d, Properties = v});
+            return filteredData;
         }
 
         public async Task<ServiceLogs[]> GetData(Guid serviceId, FilteringParams.Data filters)
@@ -55,7 +78,7 @@ namespace IOT.Services
 
         private IQueryable<ServiceLogs> GetQueryOrder(string sortBy)
         {
-            var query = _context.ServiceLogs.AsQueryable();
+            var query = _serviceLogStorage.AsQueryable();
             switch (sortBy)
             {
                 case "logDate":
@@ -77,5 +100,4 @@ namespace IOT.Services
             return query;
         }
     }
-
 }

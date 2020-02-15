@@ -10,6 +10,7 @@ using IOT.Services;
 using IOT.Helper;
 using Microsoft.Extensions.Configuration;
 using AutoMapper;
+using IOT.Storage;
 
 namespace IOT.Controllers
 {
@@ -26,7 +27,7 @@ namespace IOT.Controllers
 
         public DataController(IOTContext context, IMapper mapper)
         {
-            _service = new ServiceLogService(context);
+            _service = new ServiceLogService(new ServiceLogStorage(context));
             _servicesService = new ServiceService(context);
             _servicePropertiesService = new ServicePropertiesService(context);
             _mapper = mapper;
