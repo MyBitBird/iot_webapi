@@ -34,11 +34,9 @@ namespace IOT.Services
             log.RegisterDate = DateTime.Now;
 
             _serviceLogStorage.AddAsync(log);
-
             var dataWithRelatedProperty = FilterDataWithValidProperty(data, validProperties);
-
+            
             SaveServiceData(log.Id, dataWithRelatedProperty);
-
             _serviceLogStorage.SaveChangesAsync();
             return log;
         }
