@@ -8,6 +8,7 @@ This project is a simple IOT service that you can create your custom service wit
 * AutoMapper
 * FluentValidation
 * DTO transfer model
+* XUnit Tests
 
 # Functionality overview
 * CRUD Users (SignUp - Login - Create-Edit-Delete Subusers(devices) )
