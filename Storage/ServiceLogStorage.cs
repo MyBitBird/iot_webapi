@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IOT.Models;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace IOT.Storage
 {
@@ -14,24 +15,25 @@ namespace IOT.Storage
         {
             _context = context;
         }
-        public async Task<EntityEntry<ServiceLogs>> AddAsync(ServiceLogs log)
+        public async void AddAsync(ServiceLogs log)
         {
-            return await _context.ServiceLogs.AddAsync(log);
+             await _context.ServiceLogs.AddAsync(log);
         }
 
-        public async Task<EntityEntry<ServiceData>> AddServiceDataAsync(ServiceData data)
+        public async void AddServiceDataAsync(ServiceData data)
         {
-            return await _context.ServiceData.AddAsync(data);
+            await _context.ServiceData.AddAsync(data);
         }
 
-        public async Task<int> SaveChangesAsync()
+        public async void SaveChangesAsync()
         {
-            return await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
-        public IQueryable<ServiceLogs> AsQueryable()
+        public IQueryable<ServiceLogs> JoinWithServiceDataAndProperty()
         {
-            return _context.ServiceLogs.AsQueryable();
+            return _context.ServiceLogs.Include(s => s.ServiceData).ThenInclude(p => p.ServiceProperty);
         }
+
     }
 }
