@@ -3,6 +3,16 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="XUnitTests\**" />
+    <Compile Remove="XUnitTest\**" />
+    <Content Remove="XUnitTests\**" />
+    <Content Remove="XUnitTest\**" />
+    <EmbeddedResource Remove="XUnitTests\**" />
+    <EmbeddedResource Remove="XUnitTest\**" />
+    <None Remove="XUnitTests\**" />
+    <None Remove="XUnitTest\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Remove="Migrations\20200213153232_AddAnAdminUserToUserTableForStart.cs" />
     <Compile Remove="Migrations\20200213153232_AddAnAdminUserToUserTableForStart.Designer.cs" />
   </ItemGroup>
