@@ -47,7 +47,7 @@ namespace IOT.Controllers
             var log = _mapper.Map<ServiceLogs>(dto);
             log.UserId = userId;
 
-            log = await _service.AddData(log,
+            log = _service.AddData(log,
                                         dto.ServiceData,
                                         await _servicePropertiesService.GetValidPropertiesByServiceId(dto.ServiceId));
             return Ok(log.Id);
@@ -73,7 +73,7 @@ namespace IOT.Controllers
                 UserId = userId
             };
 
-            logs = await _service.AddData(logs,
+            logs = _service.AddData(logs,
                                            serviceData,
                                            await _servicePropertiesService.GetValidPropertiesByServiceId(serviceId));
             return Ok(new { logs.Id });
@@ -112,7 +112,7 @@ namespace IOT.Controllers
             if (service == null)
                 return Forbid();
 
-            return Ok(_mapper.Map<ServiceLogDTO[]>(await _service.GetData(serviceId, filter)));
+            return Ok(_mapper.Map<ServiceLogDTO[]>(_service.GetData(serviceId, filter)));
 
         }
     }
