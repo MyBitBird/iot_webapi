@@ -1,7 +1,6 @@
 using System;
 using IOT.Models;
 using System.Threading.Tasks;
-using System.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 

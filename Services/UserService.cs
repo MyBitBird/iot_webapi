@@ -2,11 +2,9 @@ using IOT.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using IOT.Helper;
-using System.Data;
 using System.Security.Authentication;
 
 namespace IOT.Services

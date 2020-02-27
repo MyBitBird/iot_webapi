@@ -43,7 +43,7 @@ namespace IOT.Helper
             return user.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
         }
 
-        public static string HashPassword(String password,IConfiguration config)
+        public static string HashPassword(string password,IConfiguration config)
         {
             byte[] saltByte = Encoding.UTF8.GetBytes(config["Salt:key"]);
 

@@ -2,11 +2,9 @@ using System;
 using IOT.Models;
 using IOT.DTO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using IOT.Helper;
 using IOT.Storage;
-using Microsoft.EntityFrameworkCore;
 
 namespace IOT.Services
 {

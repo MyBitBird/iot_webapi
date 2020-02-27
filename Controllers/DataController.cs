@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using IOT.DTO;
@@ -8,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using IOT.Models;
 using IOT.Services;
 using IOT.Helper;
-using Microsoft.Extensions.Configuration;
 using AutoMapper;
 using IOT.Storage;
 
