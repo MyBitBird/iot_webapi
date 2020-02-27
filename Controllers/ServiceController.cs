@@ -37,7 +37,7 @@ namespace IOT.Controllers
 
             var newService = _mapper.Map<Models.Services>(dto);
 
-            newService = await _service.NewService(newService, userId);
+            newService = await _service.Add(newService, userId);
 
             return Ok(newService.Id);
         }
@@ -50,6 +50,9 @@ namespace IOT.Controllers
                 return BadRequest();
 
             var userId = Utility.GetCurrentUserId(User);
+
+            if (await _service.GetById(id, userId) == null)
+                return Forbid();
 
             var service = _mapper.Map<Models.Services>(dto);
             return Ok(await _service.UpdateService(id, service, userId));

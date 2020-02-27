@@ -18,7 +18,7 @@ namespace IOT.Services
         {
             _context = context;
         }
-        public async Task<Models.Services> NewService(Models.Services service, Guid userId)
+        public async Task<Models.Services> Add(Models.Services service, Guid userId)
         {
             service.RegisterDate = DateTime.Now;
             service.Status = MyEnums.ServiceStatus.Active;
@@ -53,9 +53,7 @@ namespace IOT.Services
         public async Task<bool> UpdateService(Guid id, Models.Services service, Guid userId)
         {
             var preService = await GetById(id, userId);
-            if (preService == null)
-                return false;
-
+            
             var newProperties = UpdateExProperties(service, preService);
             AddNewPropertiesToService(id, newProperties);
 
